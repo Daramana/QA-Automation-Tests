@@ -1,0 +1,39 @@
+describe('BigBox', () => {
+    beforeEach(() => {
+        cy.session('login', () => {
+            cy.visit('https://bigbox.lt/')
+            cy.get('.header-user-info-image').click()
+            cy.get('#email').type('testas@superrito.com')
+            cy.get('#passwd').type('Testas1@')
+            cy.get('#SubmitLogin').click()
+            cy.url().should('eq', 'https://bigbox.lt/mano_profilis')
+        })
+    })
+    it('test1', () => {
+        cy.visit('https://bigbox.lt/mano_profilis')
+        cy.get('.toggle-menu-button').click()
+        cy.get('[href="https://bigbox.lt/9116-kompiuteriai-konsoles-zaidimai"]').click()
+       
+    })
+    it('test2', () => {
+        cy.visit('https://bigbox.lt/9116-kompiuteriai-konsoles-zaidimai')
+        cy.get(':nth-child(1) > .subcategory-container > a > .category-preview').click()
+        cy.get(':nth-child(3) > .subcategory-container > a > .category-preview').click()
+        cy.wait(2000)
+        cy.get('[data-id-product="1106147"] > .product-container > .category-item-image > .image-container > .replace-2x').click()
+        cy.get('#buy_block > .ajax_add_to_cart_button').click()
+        cy.wait(3000)
+        cy.get('#myModalLabel').should('be.visible')
+        cy.get(' a > .btn').click()
+    })
+  
+    it('test3', () => {
+        cy.visit('https://bigbox.lt/greitas_uzsakymas')
+        cy.get('#cart-summary-next-step').click()
+        cy.get('.address-next-step-block > .bb-primary-button').click()
+        cy.get('#delivery_option_788546_0').should('be.checked')
+        cy.get('#carrier-next-step').click()
+        cy.get(':nth-child(2) > .payment-item-2 > .radio-wrapper > .radio-container > label').click()
+        cy.get('#checkbox-terms').click()
+    })
+})
