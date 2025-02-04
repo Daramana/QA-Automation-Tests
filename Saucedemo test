@@ -1,0 +1,34 @@
+describe('Saucedemo', () => {
+
+    it('test1', () => {
+        cy.visit('https://www.saucedemo.com/')
+        cy.get('[data-test="username"]').type('standard_user')
+        cy.get('[data-test="password"]').type('secret_sauce')
+        cy.get('[data-test="login-button"]').click()
+        cy.url().should('include', '/inventory.html');
+        cy.get('.select_container')
+        cy.get('select').should('have.value', 'az')
+        cy.get('[data-test="product-sort-container"]').select('Name (Z to A)');
+        cy.get('[data-test="inventory-list"] > :nth-child(1)')
+        cy.get('.inventory_item').find('.inventory_item_label')
+        .then(($divs) => {
+            //  Extract the text content of each div
+            const itemTexts = [...$divs].map((div) => div.innerText.trim());
+            
+            //  Check if the texts are sorted in descending order
+            const sortedTexts = [...itemTexts].sort((a, b) => b.localeCompare(a)); // Sort in descending order
+            expect(itemTexts).to.deep.equal(sortedTexts); // Assert the order
+        })
+        cy.get('[data-test="product-sort-container"]').select('Price (low to high)');
+        cy.get('[data-test="inventory-list"] > :nth-child(1)')
+        cy.get('.pricebar').find('[data-test="inventory-item-price"]')
+        .then(($prices) => {
+            const priceValues = [...$prices].map((el) => 
+              parseFloat(el.innerText.replace('$', '').trim())
+            );
+        
+            const sortedPrices = [...priceValues].sort((a, b) => a - b); // Sort in ascending order
+            expect(priceValues).to.deep.equal(sortedPrices); // Assert the order
+          });
+    })
+})
