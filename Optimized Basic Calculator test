@@ -1,0 +1,147 @@
+describe('Basic Calculator Tests', () => {
+    const versions = ['Prototype', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+    beforeEach(() => {
+
+        cy.visit('https://testsheepnz.github.io/BasicCalculator');
+    });
+
+    versions.forEach((version) => {
+        describe(`Tests for Version: ${version}`, () => {
+            
+            describe('Without Integer Only', () => {
+                beforeEach(() => {
+                    cy.get('[data-testid="selectBuild"]').select(version)
+                    cy.get('[data-testid="integerSelect"]').should('be.visible').and('not.be.checked');
+                });
+
+
+                it('Add 2 + 7 = 9', () => {
+
+                    cy.calculate(version, 2, 7, 'Add', '9');
+                });
+
+                it('Add 2 + 0 = 2', () => {
+
+                    cy.calculate(version, 2, 0, 'Add', '2');
+                });
+
+                it('Add 2.5 + 7.1 = 9.6', () => {
+
+                    cy.calculate(version, 2.5, 7.1, 'Add', '9.6');
+                });
+
+                it('Subtract 10 - 3 = 7', () => {
+                    cy.calculate(version, 10, 3, 'Subtract', '7');
+                });
+
+                it('Subtract 10 - 0 = 10', () => {
+                    cy.calculate(version, 10, 0, 'Subtract', '10');
+                });
+
+                it('Subtract 10.5 - 3.4 = 7.1', () => {
+                    cy.calculate(version, 10.5, 3.4, 'Subtract', '7.1');
+                });
+
+                it('Multiply 4 * 5 = 20', () => {
+                    cy.calculate(version, 4, 5, 'Multiply', '20');
+                });
+
+                it('Multiply 4 * 0 = 0', () => {
+                    cy.calculate(version, 4, 0, 'Multiply', '0');
+                });
+
+                it('Multiply 4.5 * 5.1 = 22.95', () => {
+                    cy.calculate(version, 4.5, 5.1, 'Multiply', '22.95');
+                });
+
+                it('Divide 15 / 3 = 5', () => {
+                    cy.calculate(version, 15, 3, 'Divide', '5');
+                });
+
+                it('Divide 15 / 0 = divide by zero error', () => {
+                    cy.calculate(version, 15, 0, 'Divide', '');
+                });
+
+                it('Divide 15.6 / 3 = 5.2', () => {
+                    cy.calculate(version, 15.6, 3, 'Divide', '5.2');
+                });
+
+                it('Concatenate 5+5 = 55', () => {
+                    cy.calculate(version, 5, 5, 'Concatenate', '55');
+                });
+
+                it('Concatenate word+to = wordto', () => {
+                    cy.calculate(version, 'word', 'to', 'Concatenate', 'wordto');
+                });
+            });
+
+            describe('With Integer Only', () => {
+                beforeEach(() => {
+                    cy.get('[data-testid="selectBuild"]').select(version)
+                    cy.get('[data-testid="integerSelect"]').should('be.visible').click();
+                });
+
+
+                it('Add 2 + 7 = 9', () => {
+
+                    cy.calculate(version, 2, 7, 'Add', '9');
+                });
+
+                it('Add 2 + 0 = 2', () => {
+
+                    cy.calculate(version, 2, 0, 'Add', '2');
+                });
+
+                it('Add 2.5 + 7.1 = 9.6', () => {
+
+                    cy.calculate(version, 2.5, 7.1, 'Add', '9.6');
+                });
+
+                it('Subtract 10 - 3 = 7', () => {
+                    cy.calculate(version, 10, 3, 'Subtract', '7');
+                });
+
+                it('Subtract 10 - 0 = 10', () => {
+                    cy.calculate(version, 10, 0, 'Subtract', '10');
+                });
+
+                it('Subtract 10.5 - 3.4 = 7.1', () => {
+                    cy.calculate(version, 10.5, 3.4, 'Subtract', '7.1');
+                });
+
+                it('Multiply 4 * 5 = 20', () => {
+                    cy.calculate(version, 4, 5, 'Multiply', '20');
+                });
+
+                it('Multiply 4 * 0 = 0', () => {
+                    cy.calculate(version, 4, 0, 'Multiply', '0');
+                });
+
+                it('Multiply 4.5 * 5.1 = 22.95', () => {
+                    cy.calculate(version, 4.5, 5.1, 'Multiply', '22.95');
+                });
+
+                it('Divide 15 / 3 = 5', () => {
+                    cy.calculate(version, 15, 3, 'Divide', '5');
+                });
+
+                it('Divide 15 / 0 = divide by zero error', () => {
+                    cy.calculate(version, 15, 0, 'Divide', '');
+                });
+
+                it('Divide 15.6 / 3 = 5.2', () => {
+                    cy.calculate(version, 15.6, 3, 'Divide', '5.2');
+                });
+
+                it('Concatenate 5+5 = 55', () => {
+                    cy.calculate(version, 5, 5, 'Concatenate', '55');
+                });
+
+                it('Concatenate word+to = wordto', () => {
+                    cy.calculate(version, 'word', 'to', 'Concatenate', 'wordto');
+                });
+            });
+        });
+    });
+});
